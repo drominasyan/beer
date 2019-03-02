@@ -1,0 +1,114 @@
+.LoginSignUpMain {
+	color: white;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background: radial-gradient(circle at 63% 47%, #f89400 0%, #da870cb5 100%);
+}
+
+.mainForms {
+	padding: 25px 20px;
+	display: flex;
+	min-height: 320px;
+	justify-content: space-evenly;
+	width: 700px;
+	flex-direction: row;
+}
+
+.loginMethods {
+	display: flex;
+	flex-direction: column;
+	width: 320px;
+}
+
+.LoginSignUp {
+	width: 60%;
+	margin-left: 25px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+}
+
+.signsourses {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	height: 100%;
+}
+
+.signsourses button {
+	border: none;
+	padding: 10px 0;
+	border-radius: 5px;
+}
+
+.mainForms h3 {
+	margin-top: 0;
+	margin-bottom: 0;
+	color: #565353;
+}
+
+.vivaDefault {
+	background: #a71f67;
+	border: none;
+	padding: 8px 15px;
+	color: white;
+	border-radius: 5px;
+}
+
+.switcher {
+	border-radius: 3px;
+	cursor: pointer;
+	color: #585858;
+	font-size: 14px;
+	border-bottom: 1px solid;
+	padding-bottom: 3px;
+	float: right;
+}
+
+
+
+.submit {
+	padding: 8px 15px;
+	border-radius: 3px;
+	cursor: pointer;
+	background: #da870c;
+	color: #ffffff;
+	position: absolute;
+	left: 20px;
+	font-size: 15px;
+	border: none;
+}
+
+.signUpErrorMessage {
+	margin: 5px 0;
+	color: red
+}
+
+.SignUpForm {
+	position: relative;
+	background: #e6e6e6;
+	padding: 20px 20px 30px 20px;
+	border-radius: 4px;
+}
+
+.SignUpForm input {
+	padding: 10px 8px;
+	width: 100%;
+	border-radius: 3px;
+	border: none;
+	margin-bottom: 13px;
+	box-sizing: border-box;
+}
+
+.SignUpHelper{
+	color: #777373b5;
+	font-size: 13px;
+	border-bottom: 1px solid #d2cccc;
+	width: 100%;
+	display: block;
+	padding: 10px 0;
+	margin-bottom: 20px;
+}

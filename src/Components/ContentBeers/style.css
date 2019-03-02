@@ -1,0 +1,113 @@
+.beers-row {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.card-beers {
+	width: 23%;
+	margin: 20px 10px 0 10px;
+	padding: 30px 20px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	justify-content: center;
+	align-items: center;
+	box-shadow: 0 0 6px 0 #dedede;
+	background: white;
+	min-height: 310px;
+	min-width: 265px;
+}
+
+.card-beers:hover {
+	box-shadow: 0 0 14px 2px #c1c0c0;
+	transform: scale(1.02);
+	transition: transform .5s;
+}
+
+.card-beers:hover img {
+	transform: scale(1.1);
+	transition: transform .5s;
+}
+
+.card-beers img {
+	height: 150px;
+	margin-bottom: 15px;
+}
+
+.SinglePopupBeer {
+	position: fixed;
+	display: flex;
+	flex-direction: row;
+	width: 100vw;
+	justify-content: center;
+	height: 100vh;
+}
+
+.popup-center {
+	background: white;
+	height: 80%;
+	border-radius: 8px;
+	padding: 30px;
+	display: flex;
+	flex-direction: row;
+	position: relative;
+}
+
+.close, .favoriteIcon {
+	position: absolute;
+	cursor: pointer;
+	right: 10px;
+	top: 10px;
+}
+
+.left-side {
+	margin-right: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.left-side img {
+	height: 100%;
+}
+
+.right-side {
+	padding: 0 20px;
+}
+
+.right-side .title, .card-beers .title {
+	margin-top: 0;
+	color: #f89400;
+}
+.card-beers .title{
+	margin-bottom: 0;
+	cursor: pointer;
+}
+.card-beers p{
+	margin: 0;
+}
+
+.right-side .desciption {
+	color: #888784;
+}
+
+.right-side span{
+
+}
+
+@media only screen and (max-width: 1080px) {
+	.card-beers {
+		width: 36%;
+	}
+}
+
+@media only screen and (max-width: 760px) {
+	.card-beers {
+		width: 80%;
+		margin: 20px 0 0 0;
+		
+	}
+}
