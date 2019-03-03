@@ -35,6 +35,9 @@ class App extends Component {
 			this.props.data.methods.updateData(response.data)
 		})
 	}
+handlePageClick = (e)=>{
+console.log(e=1)
+}
 
 	render() {
 		console.log("ssssssssssssssssssssssss",this.props)
@@ -68,7 +71,42 @@ class App extends Component {
 						popapSwicher={this.props.data.methods.popapSwicher}
 						data={this.props.data.singleBeersData}/> : null
 				}
-				<ReactPaginate />
+				<div className="pagination">
+				< ReactPaginate previousLabel = {
+					'previous'
+				}
+				nextLabel = {
+					'next'
+				}
+				breakLabel = {
+					'...'
+				}
+				breakClassName = {
+					'break-me'
+				}
+				pageCount = {
+					this.state.pageCount
+				}
+				marginPagesDisplayed = {
+					2
+				}
+				pageRangeDisplayed = {
+					5
+				}
+				onPageChange = {
+					this.handlePageClick
+				}
+				containerClassName = {
+					'pagination'
+				}
+				subContainerClassName = {
+					'pages pagination'
+				}
+				activeClassName = {
+					'active'
+				}
+				/>
+				</div>
 			</>
 		)
 	}
