@@ -24,18 +24,14 @@ class Login extends Component {
 		e.preventDefault()
 		const state = this.state
 		const props = this.props
-
-		axios.post('http://10.25.40.103:3002/auth/login', {
-			userName: state.userName, password: state.password,
-		}).then((response) => {
-			if (response.data.token) {
-				localStorage.setItem('token', response.data.token)
-				localStorage.setItem('username', response.data.firstName)
-				props.history.push(`/`)
-			} else {
-				this.setState({})
+		const userLogin = localStorage.getItem(this.state.userName);
+		if (userLogin !== null) {
+			const data = JSON.parse(userLogin);
+			if (data.password === state.password) {
+					localStorage.setItem("token", "experimental token beer")
+					props.history.push(`/home`);
 			}
-		})
+		}
 	}
 
 	render() {

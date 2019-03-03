@@ -65,12 +65,19 @@ class ContextProvider extends Component {
 	}
 
 	updateSingleBeersData = (id) => {
+		
 		BeersHostRequest(GET_BEERS + '/' + id).then((response) => {
-			this.setState({
-				singleBeersData: response.data,
-				showPopup: true,
-			})
+			
 		})
+		for (let i = 0; i < this.state.beers.length;i++){
+		if(id === this.state.beers[i].id){
+			console.log(this.state.beers[i])
+				this.setState({
+					singleBeersData: this.state.beers[i],
+					showPopup: true,
+				})
+		}
+		}
 	}
 
 	render() {

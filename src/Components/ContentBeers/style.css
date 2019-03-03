@@ -48,10 +48,11 @@
 
 .popup-center {
 	background: white;
-	height: 80%;
+	height: 350px;
 	border-radius: 8px;
 	padding: 30px;
 	display: flex;
+	width:40%;
 	flex-direction: row;
 	position: relative;
 }
@@ -68,24 +69,37 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	align-items: center;
+	height: 100%;
 }
 
 .left-side img {
 	height: 100%;
 }
 
+.tagline{
+	color: #FFC107;
+	margin: 0;
+}
+
 .right-side {
-	padding: 0 20px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	border-radius: 13px;
 }
 
 .right-side .title, .card-beers .title {
 	margin-top: 0;
 	color: #f89400;
+	font-size: 20px
 }
+
 .card-beers .title{
 	margin-bottom: 0;
 	cursor: pointer;
 }
+
 .card-beers p{
 	margin: 0;
 }
@@ -95,9 +109,31 @@
 }
 
 .right-side span{
-
+        margin-right: 20px;
+        display: flex;
+        flex-direction: row;
+        background: #FF5722;
+        border-radius: 5px;
+        color: white;
+        justify-content: center;
+        align-items: center;
+        width: 84px;
+        height: 30px;
 }
-
+.options{
+	display: flex;
+	flex-direction: row
+}
+.description_popup {
+	    font-size: 14px;
+	    margin-bottom: 20px;
+	    border-bottom: 1px solid gray;
+	    padding-bottom: 20px;
+	    display: block;
+	    overflow-y: scroll;
+	    height: 135px;
+	    padding-right: 10px;
+}
 @media only screen and (max-width: 1080px) {
 	.card-beers {
 		width: 36%;

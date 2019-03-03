@@ -4,11 +4,13 @@ import ConsumerContext    from '../../HOC/ConsumerContext'
 import {CardBeer}         from '../ContentBeers/CardBeer'
 import '../ContentBeers/style.css'
 import SinglePopupBeer    from '../ContentBeers/SinglePopupBeer'
+import Header from '../Header';
 
 class Favorite extends Component {
 	render() {
 		return (
 			<ContextBeers>
+				< Header/>
 				<div className="container">
 					<div className="beers-row">
 						{this.props.data.favList.length ?

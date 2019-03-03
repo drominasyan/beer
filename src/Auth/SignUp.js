@@ -2,7 +2,10 @@ import axios                            from 'axios'
 import React, {Component}               from 'react'
 import {Button, FormControl, FormGroup} from 'react-bootstrap'
 import SweetAlert                       from 'react-bootstrap-sweetalert'
-import {withRouter}                     from 'react-router-dom'
+import {
+	withRouter,
+	Redirect
+} from 'react-router-dom'
 
 class SignUp extends Component {
 	constructor(props) {
@@ -14,55 +17,36 @@ class SignUp extends Component {
 				password: '',
 				password_confirm: '',
 			},
-			finished: false,
+			finished: false
 		}
 	}
 
 	onSubmit = (e) => {
 		e.preventDefault()
-		console.log(this.state);
-		const props = this.props
-		const state = this.state
-		const data = new FormData()
-		for (let key in this.state.formData) {
-			data.append(key, this.state.formData[key])
-		}
-		if (this.validateUserName() === 'success' &&
-			this.validateFirstName() === 'success' &&
-			this.validateLastName() === 'success' && this.validatePassword() ===
-			'success' && this.validatePasswordConfirm() === 'success') {
-			this.setState({
-				finished: true,
-			})
-
-			axios.post('http://10.25.40.103:3002/auth/register',
-				this.state.formData)
-				.then((response) => {
-					console.log(response)
-					if (response.data.ok) {
-						this.setState({
-							message: 'Successful',
-						})
-						localStorage.setItem('userToken', response.data.token)
-					} else {
-						this.setState({
-							message: response.data.message,
-						})
-					}
-				})
+		console.log(this.state.users)
+		const formData = this.state.formData
+		const { first_name, last_name, password, password_confirm } = formData
+		
+		
+		if (first_name &&	last_name && password) {
+			if (password_confirm !== password) {
+				alert('Password is not equal')
+			}else{
+					localStorage.setItem(first_name, JSON.stringify(formData))
+					this.setState({})
+			}
 		} else {
-			alert('Please sign up correctly')
+			alert("Please signUp currectly")
 		}
 	}
-
 	handleChangeFirsName = (e) => {
-		this.setState({
-			...this.state,
-			formData: {
-				...this.state.formData,
-				first_name: e.target.value,
-			},
-		})
+			this.setState({
+				...this.state,
+				formData: {
+					...this.state.formData,
+					first_name: e.target.value,
+				},
+			})
 	}
 	handleChangeLastName = (e) => {
 		this.setState({
@@ -73,6 +57,7 @@ class SignUp extends Component {
 			},
 		})
 	}
+
 	handleChangePassword = (e) => {
 		this.setState({
 			...this.state,
@@ -82,84 +67,25 @@ class SignUp extends Component {
 			},
 		})
 	}
+
 	handleChangePasswordConfirm = (e) => {
 		this.setState({
 			...this.state,
 			formData: {
 				...this.state.formData,
-				password_confirm: e.target.value,
-			},
+				password_confirm: e.target.value
+			}
 		})
 	}
-	onConfirm = () => {
-		window.location.reload()
-	}
-
-
-	validateUserName() {
-		const length = this.state.formData.first_name.length
-		if (length >= 3) {
-			return 'success'
-		}
-		else if (length > 0) return 'error'
-		return null
-	}
-
-	validateFirstName() {
-		const length = this.state.formData.first_name.length
-		if (length >= 3) {
-			return 'success'
-		}
-		else if (length > 0) return 'error'
-		return null
-	}
-
-	validateLastName() {
-		const length = this.state.formData.last_name.length
-		if (length >= 3) {
-			return 'success'
-		}
-		else if (length > 0) return 'error'
-		return null
-	}
-
-	validatePassword() {
-		const length = this.state.formData.password.length
-		if (length >= 3) {
-			return 'success'
-		}
-		else if (length > 0) return 'error'
-		return null
-	}
-
-	validatePasswordConfirm() {
-		const password = this.state.formData.password
-		const password_confirm = this.state.formData.password_confirm
-
-		if (password_confirm !== '' && password_confirm === password) {
-			return 'success'
-		} else if (password_confirm === '') {
-			return null
-		} else {
-			return 'error'
-		}
-	}
+	
 
 	render() {
 		return (
+			<>
 			<form className={"SignUpForm"}>
 				<h3 className={'cus'}>Sign up</h3>
 				<span className={"SignUpHelper"}>Please fill in all required fields</span>
-					{this.state.message === 'Successful' ?
-					<SweetAlert success title="Good job!"
-					            onConfirm={this.onConfirm}>
-						You clicked the button!
-					</SweetAlert> : <span
-						className={'signUpErrorMessage'}>{this.state.message}</span>}
-				<FormGroup
-					controlId="formBasicLogin"
-					validationState={this.validateFirstName()}
-				>
+				<FormGroup>
 					<FormControl
 						type="text"
 						value={this.state.formData.first_name}
@@ -168,9 +94,7 @@ class SignUp extends Component {
 					/>
 					<FormControl.Feedback/>
 				</FormGroup>
-				<FormGroup
-					validationState={this.validateLastName()}
-				>
+				<FormGroup>
 					<FormControl
 						type="text"
 						value={this.state.formData.last_name}
@@ -179,9 +103,7 @@ class SignUp extends Component {
 					/>
 					<FormControl.Feedback/>
 				</FormGroup>
-				<FormGroup
-					validationState={this.validatePassword()}
-				>
+				<FormGroup>
 					<FormControl
 						type="text"
 						value={this.state.formData.password}
@@ -190,9 +112,7 @@ class SignUp extends Component {
 					/>
 					<FormControl.Feedback/>
 				</FormGroup>
-				<FormGroup
-					validationState={this.validatePasswordConfirm()}
-				>
+				<FormGroup>
 					<FormControl
 						type="text"
 						value={this.state.formData.password_confirm}
@@ -202,8 +122,12 @@ class SignUp extends Component {
 					<FormControl.Feedback/>
 				</FormGroup>
 				<button className={"submit"} type="submit" onClick={this.onSubmit}>Submit</button>
-				<span className={"switcher"} onClick={this.props.haveAccount}>Already Hav an account ? Please Login</span>
+				<span className={"switcher"} onClick={this.props.haveAccount}>Already Have an account ? Please Login</span>
 			</form>
+			{
+				this.state.finished ? <Redirect to="/home"/> : null
+			}
+			</>
 		)
 	}
 }

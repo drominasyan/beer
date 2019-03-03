@@ -10,6 +10,9 @@ import {GET_BEERS}        from './Constants/Api'
 import ContextProvider    from './Context/ContextBeers'
 import ConsumerContext    from './HOC/ConsumerContext'
 import {BeersHostRequest} from './Network'
+import Header from './Components/Header/index';
+import ReactPaginate from 'react-paginate';
+ import Loader from 'react-loader-spinner'
 
 class App extends Component {
 	state = {
@@ -37,6 +40,8 @@ class App extends Component {
 		console.log("ssssssssssssssssssssssss",this.props)
 		return (
 			<>
+			< Header/>
+		
 				{
 					this.props.data.beers.length ?
 						<div className="container">
@@ -47,7 +52,15 @@ class App extends Component {
 								updateSingleBeersData={this.props.data.methods.updateSingleBeersData}/>
 							</div>
 						</div> :
-						<h1>...Loading</h1>
+							<Loader
+							className = {
+								"loader"
+							}
+							type = "Puff"
+							zIndex = "4"
+							color = "#00BFFF"
+							
+							 />
 				}
 				{
 					this.props.data.showPopup ? <SinglePopupBeer
@@ -55,6 +68,7 @@ class App extends Component {
 						popapSwicher={this.props.data.methods.popapSwicher}
 						data={this.props.data.singleBeersData}/> : null
 				}
+				<ReactPaginate />
 			</>
 		)
 	}
