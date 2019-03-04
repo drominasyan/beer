@@ -16,6 +16,7 @@ import {BeersHostRequest}         from './Network'
 class App extends Component {
 	state = {
 		connect: false,
+		errorMessage:""
 	}
 
 	connect = () => {
@@ -33,17 +34,26 @@ class App extends Component {
 		BeersHostRequest(
 			`${BEER_API_HOST}/v2/beers?page=${e.selected}&per_page=15`)
 			.then((response) => {
-				console.log(response)
-				this.props.data.methods.updateData(response.data)
-				this.props.data.methods.updateFetched(true)
+				if(response.status === 200){
+					this.props.data.methods.updateData(response.data)
+					this.props.data.methods.updateFetched(true)
+				}else{
+					this.props.data.methods.updateData({})
+					this.props.data.methods.updateFetched(true)
+				}
 			})
 	}
 
 	componentDidMount() {
 		BeersHostRequest(GET_BEERS).then((response) => {
-			console.log('ssssssssssssssssss', response)
-			this.props.data.methods.updateData(response.data)
-			this.props.data.methods.updateFetched(true)
+			if(response.status === 200 && response.data.length){
+				this.props.data.methods.updateData(response.data)
+				this.props.data.methods.updateFetched(true)
+			}
+		}).catch((e)=>{
+			this.setState({
+				errorMessage:e
+			})
 		})
 	}
 
@@ -99,8 +109,8 @@ class App extends Component {
 							               }
 							/>
 						</div>
-					</div> : <h1 className={'beers-row'}>There is no any
-						Beer</h1>
+					</div> :
+					<h1 className={'beers-row'}>There is no any beer</h1>
 				}
 
 				{
