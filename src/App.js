@@ -3,6 +3,7 @@ import {far, faStar}              from '@fortawesome/free-regular-svg-icons'
 import {faCode, faCoffee}         from '@fortawesome/free-solid-svg-icons'
 import React, {Component}         from 'react'
 import ReactPaginate              from 'react-paginate'
+import {withRouter}               from 'react-router-dom'
 import io                         from 'socket.io-client'
 import './App.css'
 import Beers                      from './Components/ContentBeers'
@@ -125,4 +126,4 @@ class App extends Component {
 }
 
 library.add(far, faStar, faCode, faCoffee)
-export default ConsumerContext(App)
+export default ConsumerContext(withRouter(App))

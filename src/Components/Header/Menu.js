@@ -21,7 +21,6 @@ const Menu = (props) => {
 		if(e.target.value !== ""){
 			context.methods.updateFetched(false)
 			BeersHostRequest(`${GET_BEERS}&beer_name=${e.target.value}`).then((response) => {
-				console.log('ssssssssssssssssss', response)
 				context.methods.updateData(response.data)
 				context.methods.updateFetched(true)
 			})

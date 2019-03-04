@@ -1,13 +1,8 @@
-import React                            from 'react'
-import ReactDOM                         from 'react-dom'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import React              from 'react'
+import ReactDOM           from 'react-dom'
 import './index.css'
-import App                              from './App'
-import favorite                         from './Components/Favorite'
-import Header                           from './Components/Header'
-import ConsumerContext                  from './Context/ContextBeers'
-import BeerRouter                       from './Router'
-import * as serviceWorker               from './serviceWorker'
+import BeerRouter         from './Router'
+import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
 	<>
