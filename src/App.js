@@ -1,18 +1,17 @@
-import {library}          from '@fortawesome/fontawesome-svg-core'
-import {far, faStar}      from '@fortawesome/free-regular-svg-icons'
-import {faCode, faCoffee} from '@fortawesome/free-solid-svg-icons'
-import React, {Component} from 'react'
-import io                 from 'socket.io-client'
+import {library}                  from '@fortawesome/fontawesome-svg-core'
+import {far, faStar}              from '@fortawesome/free-regular-svg-icons'
+import {faCode, faCoffee}         from '@fortawesome/free-solid-svg-icons'
+import React, {Component}         from 'react'
+import ReactPaginate              from 'react-paginate'
+import io                         from 'socket.io-client'
 import './App.css'
-import Beers              from './Components/ContentBeers'
-import SinglePopupBeer    from './Components/ContentBeers/SinglePopupBeer'
-import {GET_BEERS}        from './Constants/Api'
-import ContextProvider    from './Context/ContextBeers'
-import ConsumerContext    from './HOC/ConsumerContext'
-import {BeersHostRequest} from './Network'
-import Header from './Components/Header/index';
-import ReactPaginate from 'react-paginate';
- import Loader from 'react-loader-spinner'
+import Beers                      from './Components/ContentBeers'
+import SinglePopupBeer
+                                  from './Components/ContentBeers/SinglePopupBeer'
+import Header                     from './Components/Header/index'
+import {BEER_API_HOST, GET_BEERS} from './Constants/Api'
+import ConsumerContext            from './HOC/ConsumerContext'
+import {BeersHostRequest}         from './Network'
 
 class App extends Component {
 	state = {
@@ -29,84 +28,87 @@ class App extends Component {
 			})
 		})
 	}
+	handlePageClick = (e) => {
+		this.props.data.methods.updateFetched(false)
+		BeersHostRequest(
+			`${BEER_API_HOST}/v2/beers?page=${e.selected}&per_page=15`)
+			.then((response) => {
+				console.log(response)
+				this.props.data.methods.updateData(response.data)
+				this.props.data.methods.updateFetched(true)
+			})
+	}
 
 	componentDidMount() {
 		BeersHostRequest(GET_BEERS).then((response) => {
+			console.log('ssssssssssssssssss', response)
 			this.props.data.methods.updateData(response.data)
+			this.props.data.methods.updateFetched(true)
 		})
 	}
-handlePageClick = (e)=>{
-console.log(e=1)
-}
 
 	render() {
-		console.log("ssssssssssssssssssssssss",this.props)
+		console.log(this.props.data.fetched)
 		return (
 			<>
-			< Header/>
-		
-				{
-					this.props.data.beers.length ?
+				< Header/>
+				{this.props.data.beers.length ?
+					<div>
 						<div className="container">
 							<div className="beers-row"><Beers
 								favorite={this.props.data.favList}
+								fetched={this.props.data.fetched}
 								beers={this.props.data.beers}
 								addFavorite={this.props.data.methods.updateFavoriteList}
 								updateSingleBeersData={this.props.data.methods.updateSingleBeersData}/>
 							</div>
-						</div> :
-							<Loader
-							className = {
-								"loader"
+						</div>
+						<div className="pagination">
+							<ReactPaginate previousLabel={
+								'previous'
 							}
-							type = "Puff"
-							zIndex = "4"
-							color = "#00BFFF"
-							
-							 />
+							               nextLabel={
+								               'next'
+							               }
+							               breakLabel={
+								               '...'
+							               }
+							               breakClassName={
+								               'break-me'
+							               }
+							               pageCount={
+								               15
+							               }
+							               marginPagesDisplayed={
+								               2
+							               }
+							               pageRangeDisplayed={
+								               5
+							               }
+							               onPageChange={
+								               this.handlePageClick
+							               }
+							               containerClassName={
+								               'pagination'
+							               }
+							               subContainerClassName={
+								               'pages pagination'
+							               }
+							               activeClassName={
+								               'active'
+							               }
+							/>
+						</div>
+					</div> : <h1 className={'beers-row'}>There is no any
+						Beer</h1>
 				}
+
 				{
 					this.props.data.showPopup ? <SinglePopupBeer
 						show={this.props.data.showPopup}
 						popapSwicher={this.props.data.methods.popapSwicher}
 						data={this.props.data.singleBeersData}/> : null
 				}
-				<div className="pagination">
-				< ReactPaginate previousLabel = {
-					'previous'
-				}
-				nextLabel = {
-					'next'
-				}
-				breakLabel = {
-					'...'
-				}
-				breakClassName = {
-					'break-me'
-				}
-				pageCount = {
-					this.state.pageCount
-				}
-				marginPagesDisplayed = {
-					2
-				}
-				pageRangeDisplayed = {
-					5
-				}
-				onPageChange = {
-					this.handlePageClick
-				}
-				containerClassName = {
-					'pagination'
-				}
-				subContainerClassName = {
-					'pages pagination'
-				}
-				activeClassName = {
-					'active'
-				}
-				/>
-				</div>
 			</>
 		)
 	}

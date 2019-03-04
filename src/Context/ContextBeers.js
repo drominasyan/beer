@@ -10,12 +10,14 @@ class ContextProvider extends Component {
 			beers: [],
 			singleBeersData: null,
 			showPopup: false,
+			fetched:false,
 			favList: JSON.parse(localStorage.getItem('favorites')) || [],
 			methods: {
 				updateData: this.updateBeers,
 				updateSingleBeersData: this.updateSingleBeersData,
 				updateFavoriteList: this.updateFavoriteList,
 				popapSwicher: this.popapSwicher,
+				updateFetched: this.updateFetched,
 			},
 		}
 	}
@@ -57,7 +59,11 @@ class ContextProvider extends Component {
 			beers: data,
 		})
 	}
-
+	updateFetched = data => {
+		this.setState({
+			fetched: data,
+		})
+	}
 	popapSwicher = data => {
 		this.setState({
 			showPopup: data,

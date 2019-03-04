@@ -8,6 +8,7 @@ import Header from '../Header';
 
 class Favorite extends Component {
 	render() {
+		console.log("ddddddddddfffffffffff")
 		return (
 			<ContextBeers>
 				< Header/>

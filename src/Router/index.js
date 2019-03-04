@@ -1,23 +1,32 @@
-import React, {Component}               from 'react'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
-import App                              from '../App'
-import LoginSignUp                      from '../Auth'
-import favorite                         from '../Components/Favorite/index'
-import ContextProvider                  from '../Context/ContextBeers'
+import React, {Component}                         from 'react'
+import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom'
+import Switch
+                                                  from 'react-router-dom/es/Switch'
+import App                                        from '../App'
+import LoginSignUp                                from '../Auth'
+import favorite
+                                                  from '../Components/Favorite/index'
+import {PageNotFound}                             from '../Components/NoPage/PageNotFound'
+import ContextProvider                            from '../Context/ContextBeers'
 
 class BeerRouter extends Component {
 
 	render() {
 		return (
-			<Router>
-				<>
-					<Route exact path={'/'} component={LoginSignUp}/>
-					<ContextProvider>
-						<Route exact path={'/home'} component={App}/>
+			<ContextProvider>
+				<Router>
+					<Switch>
+						<Route exact path={'/'} component={LoginSignUp}/>
+						<Route path={'/home'} render={(props) => {
+							return localStorage.getItem('token') == null
+								? <Redirect to={'/'}/>
+								: <App/>
+						}}/>
 						<Route path={'/favorite'} component={favorite}/>
-					</ContextProvider>
-				</>
-			</Router>
+						<Route component={PageNotFound}/>
+					</Switch>
+				</Router>
+			</ContextProvider>
 		)
 	}
 }

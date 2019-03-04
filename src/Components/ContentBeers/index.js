@@ -12,6 +12,7 @@ function Beers(props) {
 		props.beers.map((item, index) => {
 			return <CardBeer
 				key={item.id}
+				fetched={props.fetched}
 				popapSwicher={props.popapSwicher}
 				iconColor={arr.includes(item.id) ? '#f89400' : 'black'}
 				updateFavoriteList={props.addFavorite}
