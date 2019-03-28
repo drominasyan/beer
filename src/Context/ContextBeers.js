@@ -1,7 +1,5 @@
-import React, {Component} from 'react'
-import {GET_BEERS}        from '../Constants/Api'
-import {BeersHostRequest} from '../Network'
-import Context            from './index'
+import React, { Component } from 'react'
+import Context from './index'
 
 class ContextProvider extends Component {
 	constructor(props) {
@@ -10,7 +8,7 @@ class ContextProvider extends Component {
 			beers: [],
 			singleBeersData: null,
 			showPopup: false,
-			fetched:false,
+			fetched: false,
 			favList: JSON.parse(localStorage.getItem('favorites')) || [],
 			methods: {
 				updateData: this.updateBeers,
@@ -23,9 +21,7 @@ class ContextProvider extends Component {
 	}
 
 	updateFavoriteList = (data) => {
-		console.log('clicked', data)
 		const favorite = this.state.favList
-		console.log('favorite', favorite.length)
 		let equal = true
 		if (favorite.length) {
 			favorite.forEach((item, index) => {
@@ -64,6 +60,7 @@ class ContextProvider extends Component {
 			fetched: data,
 		})
 	}
+	
 	popapSwicher = data => {
 		this.setState({
 			showPopup: data,
@@ -71,18 +68,13 @@ class ContextProvider extends Component {
 	}
 
 	updateSingleBeersData = (id) => {
-		
-		BeersHostRequest(GET_BEERS + '/' + id).then((response) => {
-			
-		})
-		for (let i = 0; i < this.state.beers.length;i++){
-		if(id === this.state.beers[i].id){
-			console.log(this.state.beers[i])
+		for (let i = 0; i < this.state.beers.length; i++) {
+			if (id === this.state.beers[i].id) {
 				this.setState({
 					singleBeersData: this.state.beers[i],
 					showPopup: true,
 				})
-		}
+			}
 		}
 	}
 

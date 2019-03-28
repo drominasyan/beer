@@ -1,113 +1,96 @@
-import {library}                  from '@fortawesome/fontawesome-svg-core'
-import {far, faStar}              from '@fortawesome/free-regular-svg-icons'
-import {faCode, faCoffee}         from '@fortawesome/free-solid-svg-icons'
-import React, {Component}         from 'react'
-import ReactPaginate              from 'react-paginate'
-import {withRouter}               from 'react-router-dom'
-import io                         from 'socket.io-client'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { far, faStar } from '@fortawesome/free-regular-svg-icons'
+import { faCode, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import React, { Component } from 'react'
+import ReactPaginate from 'react-paginate'
+import { withRouter } from 'react-router-dom'
 import './App.css'
-import Beers                      from './Components/ContentBeers'
-import SinglePopupBeer
-                                  from './Components/ContentBeers/SinglePopupBeer'
-import Header                     from './Components/Header/index'
-import {BEER_API_HOST, GET_BEERS} from './Constants/Api'
-import ConsumerContext            from './HOC/ConsumerContext'
-import {BeersHostRequest}         from './Network'
-
+import SinglePopupBeer from './Components/ContentBeers/SinglePopupBeer'
+import Header from './Components/Header/index'
+import { BEER_API_HOST } from './Constants/Api'
+import { BeersHostRequest } from './Network'
+import { CardBeer } from "./Components/ContentBeers/CardBeer"
+import { connect } from "react-redux"
+import { fetchBeers, updateFavoriteList } from "./Actions/index"
+import { bindActionCreators } from 'redux'
+import { GET_BEERS } from './Constants/Api'
 class App extends Component {
-	state = {
-		connect: false,
-		errorMessage:""
+	constructor(props) {
+		super(props)
+		this.state = {
+			fetched:false
+		}
 	}
 
-	connect = () => {
-		this.socket = io.connect('http://10.25.40.103:3000')
-		this.socket.on('connected', data => {
-			console.log(data)
-			this.setState({
-				connect: data,
-				value: 'dero',
-			})
-		})
-	}
 	handlePageClick = (e) => {
-		this.props.data.methods.updateFetched(false)
-		BeersHostRequest(
-			`${BEER_API_HOST}/v2/beers?page=${e.selected}&per_page=15`)
-			.then((response) => {
-				if(response.status === 200){
-					this.props.data.methods.updateData(response.data)
-					this.props.data.methods.updateFetched(true)
-				}else{
-					this.props.data.methods.updateData({})
-					this.props.data.methods.updateFetched(true)
-				}
-			})
+		this.props.fetchBeers(`${BEER_API_HOST}/v2/beers?page=${e.selected + 1}&per_page=15`)
 	}
+
 
 	componentDidMount() {
-		BeersHostRequest(GET_BEERS).then((response) => {
-			if(response.status === 200 && response.data.length){
-				this.props.data.methods.updateData(response.data)
-				this.props.data.methods.updateFetched(true)
-			}
-		}).catch((e)=>{
-			this.setState({
-				errorMessage:e
-			})
-		})
+		console.log(this.props.fetchBeers);
+		this.props.fetchBeers(GET_BEERS)
 	}
 
 	render() {
-		console.log(this.props.data.fetched)
+		const arr = []
+		this.props.data.favorits.forEach((item) => {
+			arr.push(item.id)
+		})
+		
 		return (
 			<>
-				< Header/>
+				<Header />
 				{this.props.data.beers.length ?
 					<div>
 						<div className="container">
-							<div className="beers-row"><Beers
-								favorite={this.props.data.favList}
-								fetched={this.props.data.fetched}
-								beers={this.props.data.beers}
-								addFavorite={this.props.data.methods.updateFavoriteList}
-								updateSingleBeersData={this.props.data.methods.updateSingleBeersData}/>
+							<div className="beers-row">
+								{
+									this.props.data.beers.map((item, index) => <CardBeer
+										key={item.id}
+										popapSwicher={this.props.popapSwicher}
+										iconColor={arr.includes(item.id) ? '#f89400' : 'black'}
+										updateFavoriteList={this.props.updateFavoriteList}
+										item={item}
+										updateSingleBeersData={() => this.props.updateSingleBeersData(item.id)}
+									/>)
+								}
 							</div>
 						</div>
 						<div className="pagination">
 							<ReactPaginate previousLabel={
 								'previous'
 							}
-							               nextLabel={
-								               'next'
-							               }
-							               breakLabel={
-								               '...'
-							               }
-							               breakClassName={
-								               'break-me'
-							               }
-							               pageCount={
-								               15
-							               }
-							               marginPagesDisplayed={
-								               2
-							               }
-							               pageRangeDisplayed={
-								               5
-							               }
-							               onPageChange={
-								               this.handlePageClick
-							               }
-							               containerClassName={
-								               'pagination'
-							               }
-							               subContainerClassName={
-								               'pages pagination'
-							               }
-							               activeClassName={
-								               'active'
-							               }
+								nextLabel={
+									'next'
+								}
+								breakLabel={
+									'...'
+								}
+								breakClassName={
+									'break-me'
+								}
+								pageCount={
+									15
+								}
+								marginPagesDisplayed={
+									2
+								}
+								pageRangeDisplayed={
+									5
+								}
+								onPageChange={
+									this.handlePageClick
+								}
+								containerClassName={
+									'pagination'
+								}
+								subContainerClassName={
+									'pages pagination'
+								}
+								activeClassName={
+									'active'
+								}
 							/>
 						</div>
 					</div> :
@@ -118,12 +101,25 @@ class App extends Component {
 					this.props.data.showPopup ? <SinglePopupBeer
 						show={this.props.data.showPopup}
 						popapSwicher={this.props.data.methods.popapSwicher}
-						data={this.props.data.singleBeersData}/> : null
+						data={this.props.data.singleBeersData} /> : null
 				}
 			</>
 		)
 	}
 }
+const mapStateToProps = state => {
+	return {
+		data: state.data
+	}
+}
+
+
+const mapDispatchToProps = dispatch => {
+	return bindActionCreators({
+		fetchBeers,
+		updateFavoriteList
+	}, dispatch)
+}
 
 library.add(far, faStar, faCode, faCoffee)
-export default ConsumerContext(withRouter(App))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(App))

@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import Login              from './Login';
-import SignUp             from './SignUp';
-import LoginMethods       from './LoginMethods';
+import React, { Component } from 'react';
+import Login from './Login';
+import SignUp from './SignUp';
+import LoginMethods from './LoginMethods';
 import './auth.css';
 
 class LoginSignUp extends Component {
@@ -9,23 +9,22 @@ class LoginSignUp extends Component {
 		haveAccount: false,
 		logedIn: false,
 	};
-	
+
+
 	haveAccount = () => {
 		this.setState({
 			haveAccount: !this.state.haveAccount,
 		});
 	};
-	
+
 	navigateProfile = () => {
 		this.setState({
 			logedIn: true,
 		});
 	};
+
 	
-	componentDidMount() {
-	
-	}
-	
+
 	render() {
 		return (
 			<>
@@ -34,8 +33,8 @@ class LoginSignUp extends Component {
 						<div className="LoginSignUp">
 							{!this.state.haveAccount ?
 								<Login navigateProfile={this.navigateProfile}
-								       haveAccount={this.haveAccount}/> :
-								<SignUp haveAccount={this.haveAccount}/>}
+									haveAccount={this.haveAccount} /> :
+								<SignUp haveAccount={this.haveAccount} />}
 						</div>
 					</div>
 				</div>

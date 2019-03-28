@@ -4,16 +4,15 @@ import Switch
                                                   from 'react-router-dom/es/Switch'
 import App                                        from '../App'
 import LoginSignUp                                from '../Auth'
-import favorite
-                                                  from '../Components/Favorite/index'
+import favorite                                   from '../Components/Favorite/index'
 import {PageNotFound}                             from '../Components/NoPage/PageNotFound'
 import ContextProvider                            from '../Context/ContextBeers'
-
+import {store} from "../Store/index"
+import {Provider} from "react-redux"
 class BeerRouter extends Component {
-
 	render() {
 		return (
-			<ContextProvider>
+			<Provider store={store}>
 				<Router>
 					<Switch>
 						<Route exact path={'/'} component={LoginSignUp}/>
@@ -26,7 +25,7 @@ class BeerRouter extends Component {
 						<Route component={PageNotFound}/>
 					</Switch>
 				</Router>
-			</ContextProvider>
+			</Provider>
 		)
 	}
 }

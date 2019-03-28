@@ -46,6 +46,9 @@
 	text-align: center;
 	margin: 150px;
 }
+.batonchik{
+	background: blue;
+}
 @media only screen and (max-width: 1180px) {
 	.container {
 	

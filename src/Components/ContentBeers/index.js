@@ -4,7 +4,7 @@ import './style.css'
 
 function Beers(props) {
 	const arr = []
-	props.favorite.forEach((item, index) => {
+	props.favorite.forEach((item) => {
 		arr.push(item.id)
 	})
 
