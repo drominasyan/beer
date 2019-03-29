@@ -1,23 +1,32 @@
-import { FETCH_BEERS,UPDATE_FAVLSIT } from "../Actions/types";
-const initialState = {
-    beers:[],
-    favorits:JSON.parse(localStorage.getItem('favorites')) || []
+import { FETCH_BEERS, UPDATE_FAVLSIT, POPUP_BEER } from "../Actions/types";
+
+
+export const BeerReducer = (state = [], action) => {
+    switch (action.type) {
+        case FETCH_BEERS:
+            return action.payload.data
+        default:
+            return state;
+    }
 }
 
-export const  BeerReducer = (state = initialState, action)=>{
-    switch (action.type){
-        case FETCH_BEERS:
-        return {
-            ...state,
-            beers:action.payload.data
-        }
+export const favoritReducer = (state = [...JSON.parse(localStorage.getItem('favorites'))], action) => {
+    switch (action.type) {
         case UPDATE_FAVLSIT:
-        console.log(action.payload)
-        return {
-            ...state,
-            favorits:action.payload
-        }
+            return action.payload
         default:
-        return state;
+            return state;
+    }
+}
+
+export const singleBeerData = (state = {}, action) => {
+    switch (action.type) {
+        case POPUP_BEER:
+            return {
+                ...state,
+                singleBeerData: action.payload
+            }
+        default:
+            return state;
     }
 }

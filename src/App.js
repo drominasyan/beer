@@ -8,14 +8,14 @@ import './App.css'
 import SinglePopupBeer from './Components/ContentBeers/SinglePopupBeer'
 import Header from './Components/Header/index'
 import { BEER_API_HOST } from './Constants/Api'
-import { BeersHostRequest } from './Network'
-import { CardBeer } from "./Components/ContentBeers/CardBeer"
+import CardBeer from "./Components/ContentBeers/CardBeer"
 import { connect } from "react-redux"
 import { fetchBeers, updateFavoriteList } from "./Actions/index"
 import { bindActionCreators } from 'redux'
 import { GET_BEERS } from './Constants/Api'
 class App extends Component {
 	constructor(props) {
+		// console.log(props.state)
 		super(props)
 		this.state = {
 			fetched:false
@@ -26,27 +26,27 @@ class App extends Component {
 		this.props.fetchBeers(`${BEER_API_HOST}/v2/beers?page=${e.selected + 1}&per_page=15`)
 	}
 
-
 	componentDidMount() {
-		console.log(this.props.fetchBeers);
+		// console.log(this.props)
 		this.props.fetchBeers(GET_BEERS)
 	}
 
 	render() {
+		//  console.log("this.props",this.props.state)
 		const arr = []
-		this.props.data.favorits.forEach((item) => {
+		this.props.state.favorits.forEach((item) => {
 			arr.push(item.id)
 		})
-		
+
 		return (
 			<>
 				<Header />
-				{this.props.data.beers.length ?
+				{this.props.state.beers.length ?
 					<div>
 						<div className="container">
 							<div className="beers-row">
 								{
-									this.props.data.beers.map((item, index) => <CardBeer
+									this.props.state.beers.map((item, index) => <CardBeer
 										key={item.id}
 										popapSwicher={this.props.popapSwicher}
 										iconColor={arr.includes(item.id) ? '#f89400' : 'black'}
@@ -97,19 +97,19 @@ class App extends Component {
 					<h1 className={'beers-row'}>There is no any beer</h1>
 				}
 
-				{
+				{/* {
 					this.props.data.showPopup ? <SinglePopupBeer
 						show={this.props.data.showPopup}
 						popapSwicher={this.props.data.methods.popapSwicher}
 						data={this.props.data.singleBeersData} /> : null
-				}
+				} */}
 			</>
 		)
 	}
 }
 const mapStateToProps = state => {
 	return {
-		data: state.data
+		state: state
 	}
 }
 

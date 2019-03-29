@@ -3,6 +3,7 @@ import { BeersHostRequest } from '../Network'
 
 export const fetchBeers = (url) => dispatch => {
   BeersHostRequest(url).then(res => {
+    // console.log("res", res)
     dispatch({
       type: FETCH_BEERS,
       payload: res
@@ -10,11 +11,11 @@ export const fetchBeers = (url) => dispatch => {
   })
 }
 
-export const showPopuo = () => {
-    // dispatch({
-    //   type: FETCH_BEERS,
-    //   payload: res
-    // })
+export const showPopuop = (data) => {
+  return {
+    type: POPUP_BEER,
+    payload: data
+  }
 }
 
 export const updateFavoriteList = (data) => dispach => {

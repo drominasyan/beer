@@ -10,7 +10,7 @@ const Menu = (props) => {
 	const context = useContext(Context)
 	const [inputVal, setValue] = useState('')
 	
-console.log(props)
+
 	const logout = () => {
 		localStorage.removeItem('token')
 		return props.history.push('/')
@@ -19,7 +19,7 @@ console.log(props)
 		setValue(e.target.value)
 		if(e.target.value !== ""){
 			// context.methods.updateFetched(false)
-			console.log(props);
+		
 			props.fetchBeers(`${GET_BEERS}&beer_name=${e.target.value}`)
 			// BeersHostRequest(`${GET_BEERS}&beer_name=${e.target.value}`).then((response) => {
 			// 	context.methods.updateData(response.data)

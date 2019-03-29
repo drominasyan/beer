@@ -1,39 +1,42 @@
-import React, {Component} from 'react'
-import ContextBeers       from '../../Context/ContextBeers'
-import ConsumerContext    from '../../HOC/ConsumerContext'
-import {CardBeer}         from '../ContentBeers/CardBeer'
+import React from 'react'
+import {updateFavoriteList}    from '../../Actions/index'
+import CardBeer         from '../ContentBeers/CardBeer'
 import '../ContentBeers/style.css'
-import SinglePopupBeer    from '../ContentBeers/SinglePopupBeer'
 import Header from '../Header';
-
-class Favorite extends Component {
-	render() {
-		
-		return (
-			<ContextBeers>
-				< Header/>
-				<div className="container">
-					<div className="beers-row">
-						{this.props.data.favList.length ?
-							this.props.data.favList.map((item, index) => {
-								return <CardBeer
-									key={item.id}
-									updateFavoriteList={this.props.data.methods.updateFavoriteList}
-									item={item}
-									updateSingleBeersData={this.props.data.methods.updateSingleBeersData}
-								/>
-							}) : <h1>There is nor any Favorite item</h1>
-						}
-					</div>
+import {connect} from "react-redux"
+const  Favorite =(props)=> {
+	console.log(props)
+	return (
+		<>
+			< Header/>
+			<div className="container">
+				<div className="beers-row">
+					{props.favList.length ?
+						props.favList.map((item, index) => {
+							return <CardBeer
+										key={item.id}
+										updateFavoriteList={props.updateFavoriteList}
+										item={item}
+										updateSingleBeersData={() => props.updateSingleBeersData(item.id)}
+									/>
+						}) : <h1>There is nor any Favorite item</h1>
+					}
 				</div>
-				{
-					this.props.data.showPopup ? <SinglePopupBeer
-						popapSwicher={this.props.data.methods.popapSwicher}
-						 data={this.props.data.singleBeersData}/> : null
-				}
-			</ContextBeers>
-		)
+			</div>
+			{/* {
+				props.data.showPopup ? <SinglePopupBeer
+					popapSwicher={props.data.methods.popapSwicher}
+					 data={props.data.singleBeersData}/> : null
+			} */}
+		</>
+	)
+}
+const mapStateToProps = (state) => {
+	return {
+		favList: state.favorits
 	}
 }
-
-export default ConsumerContext(Favorite)
+const mapDispatchToProps = {
+	updateFavoriteList
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Favorite)
