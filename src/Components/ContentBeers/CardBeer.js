@@ -1,23 +1,35 @@
-import React, { useState,useEffect  } from 'react'
+import React, { useState} from 'react'
 import Loader from 'react-loader-spinner'
 import { faStar } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {showPopuop} from "../../Actions/index"
-import  {connect} from "react-redux"
+import { showPopup,updateFavoriteList } from "../../Actions/index"
+import { connect } from "react-redux"
+
 const CardBeer = (props) => {
-	const popup = (id)=>{
-		const data = props.item[id]
-		props.showPopuop(data)
+	console.log("Sssssssssssssssssss")
+	const [preloaded, setPreloaded] = useState(false);
+	const img = new Image();
+	img.src = props.item.image_url;
+	img.onload = ()=>{
+		setPreloaded(true)
 	}
-	console.log(props)
+	
+	const popup = (data) => {
+		const singleData = {
+			data: data,
+			opened: true
+		}
+		props.popup(singleData)
+	}
+
 	return (
 		<div className={'card-beers'}>
 			<div className="favoriteIcon" onClick={() => {
 				props.updateFavoriteList(props.item)
 			}}><FontAwesomeIcon icon={faStar} style={{ color: props.iconColor !== undefined ? props.iconColor : "#f89400" }} />
 			</div>
-			{/* 
-			{true ? <img src={props.item.image_url} alt="title" /> : <div className="loader">
+
+			{preloaded ? <img src={img.src} alt="title" /> : <div className="loader">
 				<Loader
 					className={
 						'loader'
@@ -27,10 +39,9 @@ const CardBeer = (props) => {
 					color="#f89400"
 					textAlign="center"
 				/>
-			</div>} */}
-			<img src={props.item.image_url} alt="title" />
+			</div>}
 			<h3 className={'title'}
-				onClick={()=>popup(props.item.id)}>
+				onClick={() => popup(props.item)}>
 				{props.item.name}
 			</h3>
 			<p className="tagline-beers">
@@ -38,10 +49,10 @@ const CardBeer = (props) => {
 			</p>
 		</div>
 	)
-} 
+}
 
-const mapDispatchToProps =  {
-	showPopuop
+const mapDispatchToProps = {
+	updateFavoriteList,
 }
 
 const mapStateToProps = state => {

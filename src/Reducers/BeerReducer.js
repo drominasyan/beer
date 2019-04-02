@@ -10,7 +10,7 @@ export const BeerReducer = (state = [], action) => {
     }
 }
 
-export const favoritReducer = (state = [...JSON.parse(localStorage.getItem('favorites'))], action) => {
+export const favoritReducer = (state = JSON.parse(localStorage.getItem('favorites')) === null ? [] : [...JSON.parse(localStorage.getItem('favorites'))], action) => {
     switch (action.type) {
         case UPDATE_FAVLSIT:
             return action.payload
@@ -19,13 +19,11 @@ export const favoritReducer = (state = [...JSON.parse(localStorage.getItem('favo
     }
 }
 
-export const singleBeerData = (state = {}, action) => {
+export const singleBeerData = (state = {opened:false}, action) => {
     switch (action.type) {
         case POPUP_BEER:
-            return {
-                ...state,
-                singleBeerData: action.payload
-            }
+            console.log(action.payload)
+            return action.payload
         default:
             return state;
     }

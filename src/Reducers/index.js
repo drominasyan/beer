@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux'
-import {BeerReducer,favoritReducer} from './BeerReducer'
+import {BeerReducer,favoritReducer,singleBeerData} from './BeerReducer'
 
 export const rootReducer = combineReducers({
     beers:BeerReducer,
-    favorits:favoritReducer
+    favorits:favoritReducer,
+    showPopup:singleBeerData,
 })

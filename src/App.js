@@ -10,48 +10,42 @@ import Header from './Components/Header/index'
 import { BEER_API_HOST } from './Constants/Api'
 import CardBeer from "./Components/ContentBeers/CardBeer"
 import { connect } from "react-redux"
-import { fetchBeers, updateFavoriteList } from "./Actions/index"
+import { fetchBeers, updateFavoriteList,showPopupMethod } from "./Actions/index"
 import { bindActionCreators } from 'redux'
 import { GET_BEERS } from './Constants/Api'
 class App extends Component {
-	constructor(props) {
-		// console.log(props.state)
-		super(props)
-		this.state = {
-			fetched:false
-		}
-	}
+
 
 	handlePageClick = (e) => {
 		this.props.fetchBeers(`${BEER_API_HOST}/v2/beers?page=${e.selected + 1}&per_page=15`)
 	}
 
 	componentDidMount() {
-		// console.log(this.props)
+		console.log(this.props)
 		this.props.fetchBeers(GET_BEERS)
 	}
 
 	render() {
-		//  console.log("this.props",this.props.state)
+		 console.log("this.props.showPopup.opened",this.props.showPopup)
 		const arr = []
-		this.props.state.favorits.forEach((item) => {
+		this.props.favorits.forEach((item) => {
 			arr.push(item.id)
 		})
 
 		return (
 			<>
 				<Header />
-				{this.props.state.beers.length ?
+				{this.props.beers.length ?
 					<div>
 						<div className="container">
 							<div className="beers-row">
 								{
-									this.props.state.beers.map((item, index) => <CardBeer
+									this.props.beers.map((item, index) => <CardBeer
 										key={item.id}
-										popapSwicher={this.props.popapSwicher}
 										iconColor={arr.includes(item.id) ? '#f89400' : 'black'}
 										updateFavoriteList={this.props.updateFavoriteList}
 										item={item}
+										popup={this.props.showPopupMethod}
 										updateSingleBeersData={() => this.props.updateSingleBeersData(item.id)}
 									/>)
 								}
@@ -97,19 +91,20 @@ class App extends Component {
 					<h1 className={'beers-row'}>There is no any beer</h1>
 				}
 
-				{/* {
-					this.props.data.showPopup ? <SinglePopupBeer
-						show={this.props.data.showPopup}
-						popapSwicher={this.props.data.methods.popapSwicher}
-						data={this.props.data.singleBeersData} /> : null
-				} */}
+				{
+					this.props.showPopup.opened ? <SinglePopupBeer
+						data={this.props.showPopup.data} popup={this.props.showPopupMethod}/> : null
+				}
 			</>
 		)
 	}
 }
 const mapStateToProps = state => {
+	console.log("state", state)
 	return {
-		state: state
+		beers: state.beers,
+		favorits:state.favorits,
+		showPopup:state.showPopup
 	}
 }
 
@@ -117,7 +112,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return bindActionCreators({
 		fetchBeers,
-		updateFavoriteList
+		updateFavoriteList,
+		showPopupMethod
 	}, dispatch)
 }
 
