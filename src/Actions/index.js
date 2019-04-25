@@ -1,18 +1,13 @@
-import { FETCH_BEERS, UPDATE_FAVLSIT,POPUP_BEER } from "./types";
-import { BeersHostRequest } from '../Network'
+import { FETCH_BEERS_SAGA, UPDATE_FAVLSIT, POPUP_BEER, RECEIVED_BEER_DATA, FETCH_BEERS_SUCCESS, FETCH_BEERS_FEILD, } from "./types";
 
-export const fetchBeers = (url) => dispatch => {
-  BeersHostRequest(url).then(res => {
 
-    dispatch({
-      type: FETCH_BEERS,
-      payload: res
-    })
-  })
-}
+export const fetchBeers = (url) => ({ type: FETCH_BEERS_SAGA, payload: url })
+
+export const receivedBeerData = (data) => ({ type: RECEIVED_BEER_DATA, payload: data })
+
+
 
 export const showPopupMethod = (data) => {
-  console.log(data)
   return {
     type: POPUP_BEER,
     payload: data

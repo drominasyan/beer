@@ -6,7 +6,6 @@ import { showPopup,updateFavoriteList } from "../../Actions/index"
 import { connect } from "react-redux"
 
 const CardBeer = (props) => {
-	console.log("Sssssssssssssssssss")
 	const [preloaded, setPreloaded] = useState(false);
 	const img = new Image();
 	img.src = props.item.image_url;

@@ -12,21 +12,16 @@ import CardBeer from "./Components/ContentBeers/CardBeer"
 import { connect } from "react-redux"
 import { fetchBeers, updateFavoriteList,showPopupMethod } from "./Actions/index"
 import { bindActionCreators } from 'redux'
-import { GET_BEERS } from './Constants/Api'
 class App extends Component {
-
-
 	handlePageClick = (e) => {
 		this.props.fetchBeers(`${BEER_API_HOST}/v2/beers?page=${e.selected + 1}&per_page=15`)
 	}
 
 	componentDidMount() {
-		console.log(this.props)
-		this.props.fetchBeers(GET_BEERS)
+		this.props.fetchBeers()
 	}
 
 	render() {
-		 console.log("this.props.showPopup.opened",this.props.showPopup)
 		const arr = []
 		this.props.favorits.forEach((item) => {
 			arr.push(item.id)
@@ -100,7 +95,6 @@ class App extends Component {
 	}
 }
 const mapStateToProps = state => {
-	console.log("state", state)
 	return {
 		beers: state.beers,
 		favorits:state.favorits,

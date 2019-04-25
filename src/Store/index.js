@@ -1,16 +1,16 @@
-import { createStore, applyMiddleware} from 'redux'
-import thunk from "redux-thunk"
+import { createStore, applyMiddleware } from 'redux'
 import { rootReducer } from "../Reducers/index.js"
-import {composeWithDevTools} from "redux-devtools-extension"
-
+import { composeWithDevTools } from "redux-devtools-extension"
+import createSagaMiddlware from "redux-saga"
+import beersSaga from "../Saga/index"
 const initialState = {}
-   
 
 
-const middlware = [thunk]
+const sagaMiddlware = createSagaMiddlware()
 
 export const store = createStore(
     rootReducer,
     initialState,
-    composeWithDevTools(applyMiddleware(...middlware))
+    composeWithDevTools(applyMiddleware(sagaMiddlware))
 );
+sagaMiddlware.run(beersSaga)
