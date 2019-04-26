@@ -11,6 +11,7 @@ import { BEER_API_HOST } from './Constants/Api'
 import CardBeer from "./Components/ContentBeers/CardBeer"
 import { connect } from "react-redux"
 import { fetchBeers, updateFavoriteList,showPopupMethod } from "./Actions/index"
+import {GET_BEERS} from "./Constants/Api"
 import { bindActionCreators } from 'redux'
 class App extends Component {
 	handlePageClick = (e) => {
@@ -18,7 +19,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.props.fetchBeers()
+		this.props.fetchBeers(GET_BEERS)
 	}
 
 	render() {

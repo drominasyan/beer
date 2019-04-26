@@ -1,4 +1,4 @@
-import { RECEIVED_BEER_DATA, UPDATE_FAVLSIT, POPUP_BEER } from "../Actions/types";
+import { RECEIVED_BEER_DATA, UPDATE_FAVLSIT_BY_SAGA, POPUP_BEER } from "../Actions/types";
 
 
 export const BeerReducer = (state = [], action) => {
@@ -12,7 +12,8 @@ export const BeerReducer = (state = [], action) => {
 
 export const favoritReducer = (state = JSON.parse(localStorage.getItem('favorites')) === null ? [] : [...JSON.parse(localStorage.getItem('favorites'))], action) => {
     switch (action.type) {
-        case UPDATE_FAVLSIT:
+        case UPDATE_FAVLSIT_BY_SAGA:
+        console.log(action.payload)
             return action.payload
         default:
             return state;

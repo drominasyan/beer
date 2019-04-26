@@ -2,7 +2,7 @@ import { createStore, applyMiddleware } from 'redux'
 import { rootReducer } from "../Reducers/index.js"
 import { composeWithDevTools } from "redux-devtools-extension"
 import createSagaMiddlware from "redux-saga"
-import beersSaga from "../Saga/index"
+import {rootSaga} from "../Saga/index"
 const initialState = {}
 
 
@@ -13,4 +13,4 @@ export const store = createStore(
     initialState,
     composeWithDevTools(applyMiddleware(sagaMiddlware))
 );
-sagaMiddlware.run(beersSaga)
+sagaMiddlware.run(rootSaga)

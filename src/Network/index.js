@@ -1,9 +1,9 @@
 import axios from 'axios'
-import {GET_BEERS} from "../Constants/Api"
+
 
 //Get Beers
-export const BeersHostRequest = async () => {
-	const response = await axios.get(GET_BEERS);
+export const BeersHostRequest = async (url) => {
+	const response = await axios.get(url);
 	console.log(response)
 	return response;
 }
