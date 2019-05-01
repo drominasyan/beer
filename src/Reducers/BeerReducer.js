@@ -11,22 +11,17 @@ import {
 export const BeerReducer = (state = {}, action) => {
     switch (action.type) {
         case FETCH_BEERS_START:
-        console.log(FETCH_BEERS_START, action)
+            console.log(FETCH_BEERS_START, state)
             return {
                 ...state,
-                data:{
-                    ...state,
-                    loading:true
-                }
+                loading: true
             }
         case FETCH_BEERS_SUCCESS:
-        console.log("action.payload.data", action.payload.data)
+            console.log("action.payload.data", action.payload.data)
             return {
                 ...state,
-                data: {
-                    beers:action.payload.data,
-                    loading: false
-                }
+                loading: false,
+                beers: action.payload.data,
             }
         case FETCH_BEERS_FEILD:
             return {

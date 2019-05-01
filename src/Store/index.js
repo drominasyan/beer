@@ -7,7 +7,7 @@ const initialState = {
     data:{
         beers:[],
         loading:false,
-        error:null
+        error:false
     },
     favorits:[]
 }

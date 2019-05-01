@@ -10,8 +10,8 @@ import Header from './Components/Header/index'
 import { BEER_API_HOST } from './Constants/Api'
 import CardBeer from "./Components/ContentBeers/CardBeer"
 import { connect } from "react-redux"
-import { fetchBeers, updateFavoriteList,showPopupMethod } from "./Actions/index"
-import {GET_BEERS} from "./Constants/Api"
+import { fetchBeers, updateFavoriteList, showPopupMethod } from "./Actions/index"
+import { GET_BEERS } from "./Constants/Api"
 import { bindActionCreators } from 'redux'
 class App extends Component {
 	handlePageClick = (e) => {
@@ -28,85 +28,84 @@ class App extends Component {
 		this.props.favorits.forEach((item) => {
 			arr.push(item.id)
 		})
-	
-		// const {beers, loading, error} = this.props.data
-	
-		
+
+		const { beers, loading, error } = this.props.data
 		return (
 			<>
 				<Header />
-				
 				{
 					<div>
 						<div className="container">
 							<div className="beers-row">
-								{/* {
-									loading ? < h1 > Loading </h1> : {error} ? <h1>Error </h1> : 
-											beers.map((item, index) => < CardBeer key = {
-													item.id
-												}
-												iconColor = {
+								{
+									loading ? < h1 > Loading </h1>
+										: error ? <h1>Error </h1>
+											: <>{beers.map((item, index) => <CardBeer key={
+												item.id
+											}
+												iconColor={
 													arr.includes(item.id) ? '#f89400' : 'black'
 												}
-												updateFavoriteList = {
+												updateFavoriteList={
 													this.props.updateFavoriteList
 												}
-												item = {
+												item={
 													item
 												}
-												popup = {
+												popup={
 													this.props.showPopupMethod
 												}
-												updateSingleBeersData = {
+												updateSingleBeersData={
 													() => this.props.updateSingleBeersData(item.id)
 												}
-												/>)
-											}
-								} */}
+								/>)}
+								<div className="pagination">
+									<ReactPaginate previousLabel={
+										'previous'
+									}
+										nextLabel={
+											'next'
+										}
+										breakLabel={
+											'...'
+										}
+										breakClassName={
+											'break-me'
+										}
+										pageCount={
+											15
+										}
+										marginPagesDisplayed={
+											2
+										}
+										pageRangeDisplayed={
+											5
+										}
+										onPageChange={
+											this.handlePageClick
+										}
+										containerClassName={
+											'pagination'
+										}
+										subContainerClassName={
+											'pages pagination'
+										}
+										activeClassName={
+											'active'
+										}
+									/>
+								</div>
+								</>
+								}
 							</div>
 						</div>
-						<div className="pagination">
-							<ReactPaginate previousLabel={
-								'previous'
-							}
-								nextLabel={
-									'next'
-								}
-								breakLabel={
-									'...'
-								}
-								breakClassName={
-									'break-me'
-								}
-								pageCount={
-									15
-								}
-								marginPagesDisplayed={
-									2
-								}
-								pageRangeDisplayed={
-									5
-								}
-								onPageChange={
-									this.handlePageClick
-								}
-								containerClassName={
-									'pagination'
-								}
-								subContainerClassName={
-									'pages pagination'
-								}
-								activeClassName={
-									'active'
-								}
-							/>
-						</div>
-					</div> 
+					</div>
 				}
 				{
 					this.props.showPopup.opened ? <SinglePopupBeer
-						data={this.props.showPopup.data} popup={this.props.showPopupMethod}/> : null
+						data={this.props.showPopup.data} popup={this.props.showPopupMethod} /> : null
 				}
+
 			</>
 		)
 	}
@@ -114,8 +113,8 @@ class App extends Component {
 const mapStateToProps = state => {
 	return {
 		data: state.data,
-		favorits:state.favorits,
-		showPopup:state.showPopup
+		favorits: state.favorits,
+		showPopup: state.showPopup
 	}
 }
 
