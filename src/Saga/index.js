@@ -1,17 +1,27 @@
 import { put, call, takeLatest, takeEvery } from "redux-saga/effects"
 import { BeersHostRequest } from "../Network/index"
-import { receivedBeerData } from "../Actions/index"
-import { FETCH_BEERS_SAGA, UPDATE_FAVLSIT, UPDATE_FAVLSIT_BY_SAGA } from "../Actions/types"
+import {
+    FETCH_BEERS_SAGA,
+    UPDATE_FAVLSIT,
+    UPDATE_FAVLSIT_BY_SAGA,
+    FETCH_BEERS_START,
+    FETCH_BEERS_FEILD,
+    FETCH_BEERS_SUCCESS
+} from "../Actions/types"
 
 function* getBeersData(action) {
-    console.log()
     try {
         // Do the call to Api
         // Call also can return a function
-        const data = yield call(() => BeersHostRequest(action.payload));
-        yield put(receivedBeerData(data));
+        yield put({type:FETCH_BEERS_START});
+        const data = yield call(()=>BeersHostRequest(action.payload));
+        yield put({
+            type: FETCH_BEERS_SUCCESS, payload: data
+        })
     } catch (e) {
-        console.log(e)
+        yield put({
+            type: FETCH_BEERS_FEILD, payload: e
+        });
     }
 }
 

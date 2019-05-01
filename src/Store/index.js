@@ -3,7 +3,14 @@ import { rootReducer } from "../Reducers/index.js"
 import { composeWithDevTools } from "redux-devtools-extension"
 import createSagaMiddlware from "redux-saga"
 import {rootSaga} from "../Saga/index"
-const initialState = {}
+const initialState = {
+    data:{
+        beers:[],
+        loading:false,
+        error:null
+    },
+    favorits:[]
+}
 
 
 const sagaMiddlware = createSagaMiddlware()

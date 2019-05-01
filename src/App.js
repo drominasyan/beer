@@ -23,28 +23,46 @@ class App extends Component {
 	}
 
 	render() {
+		console.log("this.props", this.props)
 		const arr = []
 		this.props.favorits.forEach((item) => {
 			arr.push(item.id)
 		})
-
+	
+		// const {beers, loading, error} = this.props.data
+	
+		
 		return (
 			<>
 				<Header />
-				{this.props.beers.length ?
+				
+				{
 					<div>
 						<div className="container">
 							<div className="beers-row">
-								{
-									this.props.beers.map((item, index) => <CardBeer
-										key={item.id}
-										iconColor={arr.includes(item.id) ? '#f89400' : 'black'}
-										updateFavoriteList={this.props.updateFavoriteList}
-										item={item}
-										popup={this.props.showPopupMethod}
-										updateSingleBeersData={() => this.props.updateSingleBeersData(item.id)}
-									/>)
-								}
+								{/* {
+									loading ? < h1 > Loading </h1> : {error} ? <h1>Error </h1> : 
+											beers.map((item, index) => < CardBeer key = {
+													item.id
+												}
+												iconColor = {
+													arr.includes(item.id) ? '#f89400' : 'black'
+												}
+												updateFavoriteList = {
+													this.props.updateFavoriteList
+												}
+												item = {
+													item
+												}
+												popup = {
+													this.props.showPopupMethod
+												}
+												updateSingleBeersData = {
+													() => this.props.updateSingleBeersData(item.id)
+												}
+												/>)
+											}
+								} */}
 							</div>
 						</div>
 						<div className="pagination">
@@ -83,10 +101,8 @@ class App extends Component {
 								}
 							/>
 						</div>
-					</div> :
-					<h1 className={'beers-row'}>There is no any beer</h1>
+					</div> 
 				}
-
 				{
 					this.props.showPopup.opened ? <SinglePopupBeer
 						data={this.props.showPopup.data} popup={this.props.showPopupMethod}/> : null
@@ -97,7 +113,7 @@ class App extends Component {
 }
 const mapStateToProps = state => {
 	return {
-		beers: state.beers,
+		data: state.data,
 		favorits:state.favorits,
 		showPopup:state.showPopup
 	}
